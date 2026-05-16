@@ -11,8 +11,8 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/antigravity')
-    .then(() => console.log('MongoDB Connected'))
+mongoose.connect(process.env.MONGODB_URI)
+    .then(async () => {console.log('MongoDB Connected'); await seedDB();})
     .catch(err => console.log('MongoDB Connection Error:', err));
 
 // Schemas
@@ -81,7 +81,7 @@ const seedDB = async () => {
         console.error('Error seeding database:', err);
     }
 };
-seedDB();
+
 
 // API Routes
 app.get('/products', async (req, res) => {
